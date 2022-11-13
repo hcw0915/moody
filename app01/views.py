@@ -10,7 +10,7 @@ def index(request, pid=None, del_pass=None):
   posts = Post.objects.filter(enabled=True).order_by('-pub_time')[:30] 
   #? 指定 moods 為物件 => <QuerySet [<Mood: 開心>, <Mood: 難過>]>
   moods = Mood.objects.all()
-  try: # 從 form(method='GET')表單 抓資料
+  try: # 從 form(method='GET')表單
     user_id = request.GET.get('user_id')
     user_pass = request.GET.get('user_pass')
     user_post = request.GET.get('user_post')
