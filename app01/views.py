@@ -40,7 +40,7 @@ def index(request, pid=None, del_pass=None):
 
   # TODO 此欄位為 CREATE，但使用者確認沒有輸入
   # 如果 暱稱 user_id有值(不等於none)，則建立一個新的資料
-  elif user_id != None:
+  if user_id != None:
     print(user_mood)
     mood = Mood.objects.get(status=user_mood)
     post = Post.objects.create(
