@@ -3,20 +3,9 @@ from .models import Post, Mood
 # from .forms import ContactForm, PostForm
 
 def index(request, pid=None, del_pass=None):
-  # 這裡是 PostsList
+  #TODO 這裡是 PostsList
   posts = Post.objects.filter(enabled=True).order_by('-pub_time')[:30]
   moods = Mood.objects.all()
-
-  ''' 要如何判斷 刪除/新增貼文??
-  網頁表格 -submit-> views.py -> 驗證(validation) -> 儲存資料庫
-
-
-  從接收開始 pid/ del_pass開始判斷(老師的)
-  >>>>> 資料流向:
-
-  從 user_post/ user_id開始判斷
-  
-  '''
 
   try:
     user_id = request.GET.get('user_id')
@@ -33,7 +22,8 @@ def index(request, pid=None, del_pass=None):
       mood = mood,
       nickname = user_id, 
       del_pass = user_pass, 
-      message = user_post)
+      message = user_post
+      )
     post.save()
     message='成功儲存!請記得你的密碼[{}]!，訊息需要經過審查之後才會顯示。'.format(user_pass)
 
@@ -52,6 +42,7 @@ def index(request, pid=None, del_pass=None):
     if pid and del_pass:
       post = Post.objects.get(id=pid)
       if post.del_pass == del_pass:
+        # post.delete()        
         post.enabled = False
         post.save()
         message = '資料刪除成功'
@@ -65,7 +56,6 @@ def index(request, pid=None, del_pass=None):
 
 
 # from django.views import View
-
 
 
 # class Index(View):
@@ -90,7 +80,6 @@ def index(request, pid=None, del_pass=None):
 #       message = user_post)
 #     post.save()
 #     message='成功儲存!請記得你的密碼[{}]!，訊息需要經過審查之後才會顯示。'.format(user_pass)
-    
 
 #     return redirect('/')
 

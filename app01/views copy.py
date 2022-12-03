@@ -10,6 +10,7 @@ def index(request, pid=None, del_pass=None):
   # 這裡跟 listing 一樣功能 
   # 篩選 Post裡 啟用(enabled=True)，然後以建立時間(-pub_time)進行降冪排列(-order_by)，[:30]表示顯示 前30筆資料 (0-29)
   # 指定 moods 為物件 => <QuerySet [<Mood: 開心>, <Mood: 難過>]>
+  # TODO 此欄位為 LIST => 列出所有已啟用(enabled = True)的資料 
   posts = Post.objects.filter(enabled=True).order_by('-pub_time')[:30] 
   moods = Mood.objects.all()
   
@@ -24,9 +25,9 @@ def index(request, pid=None, del_pass=None):
     message = '如果要張貼訊息則每一個欄位都要填...'
   '''
   # TODO 此欄位為 DELETE - 刪除貼文 ( JavaScript做 刪除鈕按鍵導向，導到 index這裡做刪除驗證 )
-  # 此地方的值來自於 base.html JavaScript的 var usr = '/' + id + '/' + user_pass 傳值到 urls.
-  # 因為是共用同一個 views.index 所以一旦 del_pass, pid 有值，就會傳入 urls 執行 刪除段，沒有值就會傳入預設值 None
-  # 然後直接不執行 if del_pass and pid ( None 屬於 False )，直接跳到 posting功能
+  #! 此地方的值來自於 base.html JavaScript的 var usr = '/' + id + '/' + user_pass 傳值到 urls.
+  #! 因為是共用同一個 views.index 所以一旦 del_pass, pid 有值，就會傳入 urls 執行 刪除段，沒有值就會傳入預設值 None
+  #! 然後直接不執行 if del_pass and pid ( None 屬於 False )，直接跳到 posting功能
   if del_pass and pid :
     try:
       # 確認密碼及ID後則先找到對應的 pid物件

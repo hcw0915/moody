@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Mood(models.Model):
   status = models.CharField(max_length=10, null=False)
+  # 這是儲存圖片的路徑
   pic_path = models.CharField(max_length=50, null=True)
 
   def __str__(self):
